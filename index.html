@@ -20,9 +20,40 @@
     <link rel="stylesheet" href="css/style.css">
 
     <meta name="theme-color" content="#000000">
+    <style>
+
+        body {
+            background-color: black;
+            color: greenyellow;
+        }
+
+        #clock {
+            width: 800px;
+            margin: auto;
+        }
+
+        #clockTime {
+            font-family: monospace;
+            font-size: 50px;
+            text-shadow: 0px 0px 10px yellowgreen;
+        }
+
+        #clockDate {
+            font-family: monospace;
+            font-size: 34px;
+            text-shadow: 0px 0px 10px yellowgreen;
+        }
+    </style>
 </head>
 
 <body>
+
+    <div id="clock">
+        <h3>the time is...</h3>
+        <span id="clockTime">0</span>
+        <h3>or</h3>
+        <span id="clockDate">0</span>
+    </div>
 
     <div>
         <a href="auto/index.html"><h1>yow!</h1></a>
@@ -32,7 +63,13 @@
     <script src="js/app.js"></script>
 
     <script>
-
+        var clockTime = document.getElementById('clockTime');
+        var clockDate = document.getElementById('clockDate');
+        
+        setInterval(function () {
+            clockTime.innerText = Date.now() / 1000;
+            clockDate.innerText = new Date().toLocaleString('de');
+        }, 100);
     </script>
 
 </body>
