@@ -1,0 +1,15 @@
+#cursorInfoBox {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 300px;
+    height: 40px;
+}
+
+#infoBox {
+    color: rgba(154, 205, 50, 0.5);
+}
+
+body {
+    background-color: #000000;
+}

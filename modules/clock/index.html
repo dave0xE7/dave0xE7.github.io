@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        body {
+            /* background-color: black; */
+            color: greenyellow;
+            font: inherit;
+        }
+
+        #clock {
+            margin: 20px;
+            position: absoulte;
+            right: 0px;
+            top: 0px;
+            width: 800px;
+            /* margin: 0; */
+        }
+
+        #clockTime {
+            font-family: monospace;
+            font-size: 50px;
+            text-shadow: 0px 0px 10px yellowgreen;
+        }
+
+        #clockDate {
+            font-family: monospace;
+            font-size: 34px;
+            text-shadow: 0px 0px 10px rgb(154, 205, 50);
+        }
+    </style>
+</head>
+<body>
+    
+
+
+    <div id="clock" class="unselectable">
+        <h3>the time is...</h3>
+        <span id="clockTime">0</span>
+        <h3>or</h3>
+        <span id="clockDate">0</span>
+    </div>
+    <script>
+        var clockTime = document.getElementById('clockTime');
+        var clockDate = document.getElementById('clockDate');
+        
+        setInterval(function () {
+            clockTime.innerText = Date.now() / 1000;
+            clockDate.innerText = new Date().toLocaleString('de');
+        }, 100);
+
+        // var btnMusic = document.getElementById('btnMusic');
+
+        // btnMusic.onclick = function() {
+        //     console.log('music on')
+        //     document.getElementsByTagName('main')[0].innerHTML = '<iframe src="music.html"></iframe>';
+        // }
+    </script>
+
+</body>
+</html>

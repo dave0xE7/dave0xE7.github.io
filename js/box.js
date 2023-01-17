@@ -44,7 +44,7 @@ class Point {
 function DrawPaths(ctx) {
     for (let i = 0; i < paths.length; i++) {
         // let drawpath = paths[index];
-        console.log(paths[i]);
+        // console.log(paths[i]);
 
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'white';
@@ -224,7 +224,9 @@ function resizeCanvas() {
     canvas.height = window.innerHeight;
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    DrawPaths(ctx);
     console.log('resize');
+
     updateInfo();
 }
 
