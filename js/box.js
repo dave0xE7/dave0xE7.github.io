@@ -1,9 +1,20 @@
+// helper functions
+
+function degToRad(degrees) {
+    const result = (Math.PI / 180) * degrees;
+    return result;
+}
+
+const RADIUS = 20;
 
 var canvas, ctx;
 // When true, moving the mouse draws on the canvas
 var isDrawing = true;
 var x = 0;
 var y = 0;
+
+var xm = 0;
+var ym = 0;
 
 var cursorX, cursorY;
 var cursorInfoBox;
@@ -60,7 +71,16 @@ function LogKeyboardEvents() {
     });
     document.addEventListener('pointerdown', (e) => {
         // console.log(event);
-        drawDot(ctx, e.x, e.y, "red")
+        
+        if (e.which == 1) {
+            drawDot(ctx, e.x, e.y, "blue");
+        } else if (e.which == 3) {
+            drawDot(ctx, e.x, e.y, "red");
+        } else if (e.which == 2) {
+            drawDot(ctx, e.x, e.y, "green");
+        } else {
+            drawDot(ctx, e.x, e.y, "white");
+        }
 
         pointerDown = true;
     })
@@ -79,8 +99,8 @@ function LogKeyboardEvents() {
 
     document.addEventListener('pointermove', (e) => {
         // console.log(event);
-        cursorX = e.x;
-        cursorY = e.y;
+        cursorX = Math.floor(e.x);
+        cursorY = Math.floor(e.y);
 
         // ctx.clearRect(0,0,canvas.width, canvas.height);
         // ctx.fillText("x: "+cursorX+", y:"+cursorY+"", 10, 50);
@@ -97,10 +117,19 @@ function LogKeyboardEvents() {
         y = e.y;
 
     });
+
+    // document.addEventListener('click', async (e) => {
+    //     if (!document.pointerLockElement) {
+    //         await canvas.requestPointerLock({
+    //             unadjustedMovement: true,
+    //         })
+    //     }
+    // });
 }
 
 function drawDot(ctx, x, y, c) {
     ctx.fillStyle = c;
+    ctx.strokeStyle = c;
     ctx.beginPath();
     ctx.arc(x, y, 50, 0, 2 * Math.PI);
     ctx.stroke();
@@ -266,6 +295,75 @@ function CreateInputControlls(name, defaultValue) {
     controllsBox.append(newBox);
 }
 
+//#region pointerlock
+function InitPointerLock() {
+    // let x = 50;
+    // let y = 50;
+    xm = 50;
+    ym = 50;
+    
+    function canvasDraw() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f00";
+      ctx.beginPath();
+      ctx.arc(xm, ym, RADIUS, 0, degToRad(360), true);
+      ctx.fill();
+    }
+    canvasDraw();
+    
+    document.addEventListener("click", async () => {
+      if(!document.pointerLockElement) {
+        await canvas.requestPointerLock({
+          unadjustedMovement: true,
+        });
+      }
+    });
+    
+    // pointer lock event listeners
+    
+    document.addEventListener("pointerlockchange", lockChangeAlert, false);
+    
+    function lockChangeAlert() {
+      if (document.pointerLockElement === canvas) {
+        console.log("The pointer lock status is now locked");
+        document.addEventListener("mousemove", updatePosition, false);
+      } else {
+        console.log("The pointer lock status is now unlocked");
+        document.removeEventListener("mousemove", updatePosition, false);
+      }
+    }
+    
+    const tracker = document.getElementById("tracker");
+    
+    let animation;
+    function updatePosition(e) {
+      xm+= e.movementX;
+      ym += e.movementY;
+      if (xm> canvas.width + RADIUS) {
+        xm= -RADIUS;
+      }
+      if (ym > canvas.height + RADIUS) {
+        ym = -RADIUS;
+      }
+      if (xm< -RADIUS) {
+        xm= canvas.width + RADIUS;
+      }
+      if (ym < -RADIUS) {
+        ym = canvas.height + RADIUS;
+      }
+      tracker.textContent = `xm position: ${xm}, ym position: ${ym}`;
+    
+      if (!animation) {
+        animation = requestAnimationFrame(function () {
+          animation = null;
+          canvasDraw();
+        });
+      }
+    }
+    
+}
+//#endregion pointerlock
 
 window.onload = function () {
 
@@ -331,33 +429,6 @@ window.onload = function () {
 
     ctx.fillStyle = '#000000'
     ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-
-    window.addEventListener('resize', (e) => {
-        resizeCanvas();
-    })
-
-    // canvas.addEventListener('mousemove', (e) => {
-    //     // console.log(e);
-    //     if (isDrawing) {
-    //       drawLine(ctx, x, y, e.x, e.y);
-    //       x = e.x;
-    //       y = e.y;
-    //     }
-    //   });
-
-    LogKeyboardEvents();
-
-    LoadPaths();
-
-    setInterval(function () {
-        // clockTime.innerText = Date.now() / 1000;
-        // clockDate.innerText = new Date().toLocaleString('de');
-        updateTitle();
-    }, 400);
-
-
     document.body.onbeforeunload = function (e) {
         alert('onbeforeunload');
         console.log('onbeforeunload');
@@ -378,5 +449,52 @@ window.onload = function () {
         console.log(e);
     };
 
-    CreateInputControlls('test', 0);
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+
+    window.addEventListener('resize', (e) => {
+        resizeCanvas();
+    })
+
+    // canvas.addEventListener('mousemove', (e) => {
+    //     // console.log(e);
+    //     if (isDrawing) {
+    //       drawLine(ctx, x, y, e.x, e.y);
+    //       x = e.x;
+    //       y = e.y;
+    //     }
+    //   });
+
+    LogKeyboardEvents();
+
+    LoadPaths();
+
+    // setInterval(function () {
+    //     // clockTime.innerText = Date.now() / 1000;
+    //     // clockDate.innerText = new Date().toLocaleString('de');
+    //     updateTitle();
+    // }, 400);
+
+
+    // document.body.onbeforeunload = function (e) {
+    //     alert('onbeforeunload');
+    //     console.log('onbeforeunload');
+    //     console.log(e);
+    // };
+
+    // document.body.onfocus = function (e) {
+    //     console.log('onfocus ');
+    //     console.log(e);
+    // };
+
+    // document.body.onpageshow = function (e) {
+    //     console.log('onpageshow ');
+    //     console.log(e);
+    // };
+    // document.body.onpagehide = function (e) {
+    //     console.log('onpagehide ');
+    //     console.log(e);
+    // };
+
+    // CreateInputControlls('test', 0);
 };
