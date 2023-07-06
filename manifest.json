@@ -1,10 +1,10 @@
 {
-  "name": "invidec.net",
-  "short_name": "invidec",
+  "name": "dave0xE7.github.io",
+  "short_name": "dave0xE7",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
-  "description": "website for invidec.net",
+  "background_color": "#000",
+  "description": "dave0xE7 website",
   "icons": [
     {
       "src": "icons/512.png",
