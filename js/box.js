@@ -68,7 +68,7 @@ function LogKeyboardEvents() {
         console.log("keydown: " + keyName);
         logBox.textContent += keyName;
 
-    });
+    });    
     document.addEventListener('pointerdown', (e) => {
         // console.log(event);
         
@@ -83,7 +83,7 @@ function LogKeyboardEvents() {
         }
 
         pointerDown = true;
-    })
+    });
 
     document.addEventListener('pointerup', (e) => {
         // console.log(event.pointerType);
@@ -367,6 +367,16 @@ function InitPointerLock() {
 }
 //#endregion pointerlock
 
+
+function startMoveFullscreenBtn() {
+    btnA.style.position = 'absolute';
+
+    document.addEventListener('pointermove', (e) => {
+        btnA.style.left = (e.x-10)+'px';
+        btnA.style.top = (e.y-10)+'px';
+    });
+}
+
 window.onload = function () {
 
     canvas = document.createElement('canvas');
@@ -499,4 +509,8 @@ window.onload = function () {
     // };
 
     // CreateInputControlls('test', 0);
+
+    // setTimeout(() => {
+    //     openFullscreen();
+    // }, 3000);
 };

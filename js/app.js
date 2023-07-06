@@ -1,4 +1,11 @@
 
+
+var pageFirstLoadedAt = Date.now();
+
+// window.onload = function () {
+//     pageFirstLoadedAt = Date.now();
+// }
+
 $(function () {
     
 

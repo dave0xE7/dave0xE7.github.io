@@ -73,10 +73,23 @@ monitor.init = InitMonitor;
 monitor.test = TestMonitor;
 
 monitor.update = function () {
-    imageData = monitorCanvasCtx.getImageData(0, 0, monitorCanvas.width-1, monitorCanvas.height - 1);
-    monitorCanvasCtx.putImageData(imageData, -1, 0);
+    // imageData = monitorCanvasCtx.getImageData(0, 0, monitorCanvas.width-1, monitorCanvas.height - 1);
+    // monitorCanvasCtx.putImageData(imageData, -1, 0);
 
+    monitorCanvasCtx.clearRect(0,0,monitorCanvas.width, monitorCanvas.height);
 
+    for (var i=0; i<=monitorCanvas.width; i++) {
+        monitorCanvasCtx.beginPath();
+        monitorCanvasCtx.moveTo(i, 0);
+        let ih = 1;
+        ih = Math.sin(i/10)*monitorCanvas.height;
+        // if (Math.floor(i/10)) {
+        //     ih = 100;
+        //     ih = monitorCanvas.height;
+        // }
+        monitorCanvasCtx.lineTo(i, ih);
+        monitorCanvasCtx.stroke();
+    }
 };
 
 monitor.start = function () {

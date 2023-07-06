@@ -16,7 +16,8 @@
     <!-- <link rel="apple-touch-icon" href="icon.png"> -->
     <!-- Place favicon.ico in the root directory -->
 
-
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <link rel="manifest" href="manifest.json">
 
     <link rel="stylesheet" href="./vendor/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css">
     <!-- <link rel="stylesheet" href="./vendor/bootstrap-5.3.0-alpha1-dist/css/bootstrap-utilities.css"> -->
@@ -33,13 +34,7 @@
 
 <body>
 
-    <!-- <iframe src="/modules/clock/"></iframe> -->
-    <!-- <div id="clock" class="unselectable">
-        <h3>the time is...</h3>
-        <span id="clockTime">0</span>
-        <h3>or</h3>
-        <span id="clockDate">0</span>
-    </div> -->
+    <iframe src="/modules/index.html"></iframe>
 
     <main>
 
@@ -54,26 +49,10 @@
 
     <!-- <script src="js/vendor/modernizr-3.11.7.min.js"></script> -->
     
-    <!-- <script src="./js/app.js"></script> -->
+    <script src="./js/app.js"></script>
 
     <div id="tracker"></div>
 
-    <!-- <script>
-        var clockTime = document.getElementById('clockTime');
-        var clockDate = document.getElementById('clockDate');
-        
-        setInterval(function () {
-            clockTime.innerText = Date.now() / 1000;
-            clockDate.innerText = new Date().toLocaleString('de');
-        }, 100);
-
-        // var btnMusic = document.getElementById('btnMusic');
-
-        // btnMusic.onclick = function() {
-        //     console.log('music on')
-        //     document.getElementsByTagName('main')[0].innerHTML = '<iframe src="music.html"></iframe>';
-        // }
-    </script> -->
     <script>
 
         $(function () {
@@ -88,7 +67,7 @@
         $('main').load('/modules/clock/');
     </script>
 
-    <script src="js/monitor.js"></script>
+    <!-- <script src="js/monitor.js"></script> -->
 
 </body>
 
